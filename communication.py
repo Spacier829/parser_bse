@@ -83,6 +83,10 @@ class Communication:
                     read_frame_hex = ""
                     data_frame = ""
 
+    def communication_thread(self):
+        communication_thread = Thread(target=self.read_data())
+        communication_thread.start()
+
     def read_frame_info(self, frame):
         frame_status = self.get_frame_status(frame)
         self.count_frames(frame_status)
@@ -240,10 +244,6 @@ class Communication:
         crc = crc & 0xFFFF
         crc = hex(crc)
         return crc
-
-    def communication_thread(self):
-        communication_thread = Thread(target=self.read_data())
-        communication_thread.start()
 
     def get_frame_status(self, frame):
         if len(frame) != 64:
